@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" width="1000" height="620">
+  <defs>
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fafbfc"/>
+      <stop offset="100%" style="stop-color:#eef2f5"/>
+    </linearGradient>
+    <marker id="arr2" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L0,12 L10,6 z" fill="#1F4E79"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="620" fill="url(#bgGrad4)"/>
+
+  <text x="500" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1F4E79">
+    ChirpStack Network Server: Components &amp; Bottlenecks
+  </text>
+  <text x="500" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#555" font-style="italic">
+    The five processes that handle every packet — and which one fails first at scale
+  </text>
+
+  <!-- Gateway inputs (left) -->
+  <g transform="translate(40, 100)">
+    <rect width="120" height="70" rx="8" fill="#90A4AE" stroke="#37474F" stroke-width="2"/>
+    <text x="60" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff">Gateways</text>
+    <text x="60" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#fff">via MQTT</text>
+    <text x="60" y="62" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#CFD8DC">port 1883</text>
+  </g>
+
+  <!-- Inside box: NS components -->
+  <g transform="translate(220, 90)">
+    <rect width="600" height="430" rx="12" fill="#fff" stroke="#1F4E79" stroke-width="2.5" stroke-dasharray="5,3"/>
+    <text x="300" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1F4E79">
+      ChirpStack Network Server (single VPS or split)
+    </text>
+
+    <!-- Mosquitto (MQTT broker) -->
+    <g transform="translate(30, 50)">
+      <rect width="180" height="80" rx="8" fill="#FFE0B2" stroke="#F57C00" stroke-width="2"/>
+      <text x="90" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#E65100">Mosquitto</text>
+      <text x="90" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">MQTT broker</text>
+      <text x="90" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Routes packets</text>
+      <text x="90" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">gateways ↔ NS</text>
+    </g>
+
+    <!-- ChirpStack core -->
+    <g transform="translate(240, 50)">
+      <rect width="220" height="120" rx="8" fill="#C8E6C9" stroke="#2E7D32" stroke-width="2"/>
+      <text x="110" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1B5E20">ChirpStack Core</text>
+      <text x="110" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Network Server logic</text>
+      <line x1="20" y1="50" x2="200" y2="50" stroke="#2E7D32" stroke-width="1" opacity="0.5"/>
+      <text x="110" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• Decrypt &amp; authenticate</text>
+      <text x="110" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• Deduplicate uplinks</text>
+      <text x="110" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• Run ADR algorithm</text>
+      <text x="110" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• Forward to integrations</text>
+    </g>
+
+    <!-- REST API -->
+    <g transform="translate(490, 50)">
+      <rect width="90" height="80" rx="8" fill="#E1BEE7" stroke="#7B1FA2" stroke-width="2"/>
+      <text x="45" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#4A148C">REST API</text>
+      <text x="45" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">UI &amp; mgmt</text>
+      <text x="45" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">:8080</text>
+    </g>
+
+    <!-- PostgreSQL -->
+    <g transform="translate(30, 200)">
+      <rect width="180" height="80" rx="8" fill="#BBDEFB" stroke="#1976D2" stroke-width="2"/>
+      <text x="90" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#0D47A1">PostgreSQL</text>
+      <text x="90" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Devices, keys, config</text>
+      <text x="90" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#C62828" font-weight="bold">⚠ First bottleneck</text>
+      <text x="90" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#666">at ~100k+ devices</text>
+    </g>
+
+    <!-- Redis -->
+    <g transform="translate(240, 200)">
+      <rect width="220" height="80" rx="8" fill="#FFCDD2" stroke="#C62828" stroke-width="2"/>
+      <text x="110" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#B71C1C">Redis</text>
+      <text x="110" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#666">Frame counters, dedup, sessions</text>
+      <text x="110" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Hot path on every packet</text>
+      <text x="110" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#666">Keep in RAM, persistent backup</text>
+    </g>
+
+    <!-- Integration outputs -->
+    <g transform="translate(490, 200)">
+      <rect width="90" height="80" rx="8" fill="#FFF9C4" stroke="#F9A825" stroke-width="2"/>
+      <text x="45" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#F57F17">Integrations</text>
+      <text x="45" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">MQTT out</text>
+      <text x="45" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">HTTP webhooks</text>
+      <text x="45" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">InfluxDB</text>
+    </g>
+
+    <!-- Resource indicators at bottom -->
+    <g transform="translate(20, 310)">
+      <text x="290" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1F4E79">Resource usage (rough rules)</text>
+
+      <g transform="translate(0, 35)">
+        <rect width="180" height="75" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+        <text x="90" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">CPU</text>
+        <text x="90" y="38" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">~1 core / 10,000 dev</text>
+        <text x="90" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">@ 1 uplink/hour</text>
+        <text x="90" y="66" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2E7D32">scales linearly</text>
+      </g>
+
+      <g transform="translate(190, 35)">
+        <rect width="180" height="75" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+        <text x="90" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">RAM</text>
+        <text x="90" y="38" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">~1 GB / 50,000 dev</text>
+        <text x="90" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">Redis takes most</text>
+        <text x="90" y="66" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2E7D32">scales linearly</text>
+      </g>
+
+      <g transform="translate(380, 35)">
+        <rect width="180" height="75" rx="6" fill="#fff" stroke="#999" stroke-width="1"/>
+        <text x="90" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Disk</text>
+        <text x="90" y="38" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">~10 MB / device / yr</text>
+        <text x="90" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">if logging all frames</text>
+        <text x="90" y="66" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#F57C00">trim periodically</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Customer apps (right) -->
+  <g transform="translate(860, 100)">
+    <rect width="120" height="70" rx="8" fill="#FFD54F" stroke="#F57F17" stroke-width="2"/>
+    <text x="60" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Customer</text>
+    <text x="60" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">apps</text>
+    <text x="60" y="62" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">MQTT/HTTP</text>
+  </g>
+
+  <!-- Arrows in and out -->
+  <line x1="165" y1="135" x2="245" y2="135" stroke="#1F4E79" stroke-width="2" marker-end="url(#arr2)"/>
+  <line x1="815" y1="225" x2="855" y2="135" stroke="#1F4E79" stroke-width="2" marker-end="url(#arr2)"/>
+
+  <!-- Footer / takeaway -->
+  <g transform="translate(50, 540)">
+    <rect width="900" height="65" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+    <text x="450" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1B5E20">
+      💡 Key insight
+    </text>
+    <text x="450" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">
+      The radio layer fails long before the NS does. One €5/month VPS handles thousands of devices easily — but no compute can fix RF collisions.
+    </text>
+  </g>
+</svg>

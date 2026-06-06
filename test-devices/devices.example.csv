@@ -1,0 +1,7 @@
+# Example device registration file
+# Format: name,devEui,appKey,deviceProfileId,applicationId
+# Copy this to devices.csv and fill in real values
+# Run: ./test-devices/scripts/register-device.sh devices.csv
+
+lht65-test-01,A84041B2C0000123,0F8B0F6E3D8A4B2C1D5E6F708192A3B4,REPLACE_WITH_DEVICE_PROFILE_UUID,REPLACE_WITH_APP_UUID
+lht65-test-02,A84041B2C0000124,1A2B3C4D5E6F708192A3B4C5D6E7F809,REPLACE_WITH_DEVICE_PROFILE_UUID,REPLACE_WITH_APP_UUID

@@ -1,0 +1,69 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🚀 Start ChirpStack",
+      "type": "shell",
+      "command": "./scripts/start.sh",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "🛑 Stop ChirpStack",
+      "type": "shell",
+      "command": "./scripts/stop.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "🔍 Check network",
+      "type": "shell",
+      "command": "./scripts/check-network.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "📦 Backup database",
+      "type": "shell",
+      "command": "./scripts/backup.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "📋 Tail ChirpStack logs",
+      "type": "shell",
+      "command": "docker compose -f chirpstack-server/docker-compose.yml logs -f chirpstack",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "📋 Tail Gateway Bridge logs",
+      "type": "shell",
+      "command": "docker compose -f chirpstack-server/docker-compose.yml logs -f chirpstack-gateway-bridge",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "🎧 Listen to MQTT uplinks",
+      "type": "shell",
+      "command": "./test-devices/scripts/mqtt-listen.sh",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "🌐 Open web UI",
+      "type": "shell",
+      "command": "xdg-open http://$(ip -4 addr show | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' | grep -v 127 | head -1):8080 || open http://localhost:8080",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+# Docker volumes (these contain real data — never commit)
+postgresqldata/
+redisdata/
+mosquitto/data/
+mosquitto/log/
+
+# Backups
+backups/
+*.sql.gz
+*.sql
+
+# Firmware downloads (huge binary files)
+downloads/
+*.wic
+*.wic.gz
+*.img
+*.img.gz
+*.bin
+
+# Editor / OS
+.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+
+# Generated secrets — don't commit
+*.secret
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+
+# Node (if you add dashboards later)
+node_modules/
+
+# Python (if you add automation scripts later)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Keep example files but not real customer data
+devices.csv
+!devices.example.csv

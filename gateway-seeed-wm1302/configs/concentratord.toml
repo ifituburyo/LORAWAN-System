@@ -1,0 +1,38 @@
+# Deployed concentratord.toml — Seeed WM1302 SPI US915
+# Location on gateway: /etc/chirpstack-concentratord-manual/concentratord.toml
+# Copied at service start to: /var/etc/chirpstack-concentratord/concentratord.toml
+#
+# This file is hand-crafted because the UCI helper's case block doesn't generate
+# correct configs for the sx1302 path. Don't rely on UCI for this hardware.
+
+[concentratord]
+  log_level = "INFO"
+  log_to_syslog = true
+  stats_interval = "30s"
+  disable_crc_filter = false
+
+  [concentratord.api]
+    event_bind = "ipc:///tmp/concentratord_event"
+    command_bind = "ipc:///tmp/concentratord_command"
+
+[gateway]
+  antenna_gain = 3
+  lorawan_public = true
+
+  # US915 for the bench. Change to "EU868" for production hardware.
+  region = "US915"
+
+  # CRITICAL: "seeed_wm1302" selects the SPI variant.
+  # NEVER use "semtech_sx1302css915gw1" — that's the USB reference design,
+  # the binary will try to open /dev/ttyACM0 and crash.
+  # Valid alternatives: "rak_2287", "semtech_sx1302c915gw1" (single 'c' = SPI)
+  model = "seeed_wm1302"
+
+  model_flags = []
+  time_fallback_enabled = false
+
+  # Kigali coordinates. Update to actual deployment location.
+  [gateway.location]
+    latitude = -1.9536
+    longitude = 30.0606
+    altitude = 1567

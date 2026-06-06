@@ -1,0 +1,44 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/__pycache__": true,
+    "**/.DS_Store": true,
+    "**/postgresqldata": true,
+    "**/redisdata": true,
+    "**/backups": true,
+    "**/downloads/*.wic*": true,
+    "**/downloads/*.img*": true,
+    "**/downloads/*.bin": true
+  },
+  "search.exclude": {
+    "**/postgresqldata": true,
+    "**/redisdata": true,
+    "**/backups": true,
+    "**/downloads": true
+  },
+  "files.watcherExclude": {
+    "**/postgresqldata/**": true,
+    "**/redisdata/**": true
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "editor.tabSize": 4
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.tabSize": 2
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.tabSize": 2
+  },
+  "files.associations": {
+    "*.toml": "toml",
+    "docker-compose*.yml": "dockercompose"
+  },
+  "terminal.integrated.cwd": "${workspaceFolder}"
+}
