@@ -46,3 +46,7 @@ venv/
 # Keep example files but not real customer data
 devices.csv
 !devices.example.csv
+
+# Release archives
+*.zip
+*.tar.gz
